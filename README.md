@@ -6,6 +6,7 @@ Team collaboration and DevOps in one place
 * A Bot for both these systems will be real handy that could listen to team conversations and kick of builds, releases, tests, send email communications and other things. 
 * Using Microsoft Bot framework and build Slack and Microsoft Team  
 * Integrate with This is [Linguistic Analysis API](https://www.microsoft.com/cognitive-services/en-us/linguistic-analysis-api) and [Text Analytics API](https://www.microsoft.com/cognitive-services/en-us/text-analytics-api) for better Bot interactions 
+* **NOTE:** The Linguistic and Text Analytics APIs are not free, and they have pay per call payment policy, which should be considered to see how much will it cost to handle certain number of requests.
 * Integrate with VSTS and Github 
   * Manage build and deployments (trigger, approve, status report)  
   * Test executions 
@@ -20,7 +21,7 @@ Team collaboration and DevOps in one place
 
 ##How big is the market 
 * There are 11 Million professional developers in the world (http://bit.ly/2i71WEG) 
-* If we imagine all teams on average have 10 members working on the same project, there are 1 Million professional teams. 
+* If we imagine all teams on average have 10 members working on the same project, there are **1 Million professional teams**. 
  
  
 ##How do we market the product 
@@ -35,4 +36,10 @@ Team collaboration and DevOps in one place
 ##Skills and Team
 
 ##Key Features
+
+
+#High Level Architecture
+# Diagram
+![alt text](https://github.com/daveos/DevOrb/blob/master/Documents/Build%20Release%20Bot.jpg "High Level Architecture Diagram")
+
 
