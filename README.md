@@ -15,15 +15,22 @@ Team collaboration and DevOps in one place
   * Build release 
 * Integrate with Outlook/Office 365 for email communications 
 
+##What is in it for Orbital
+* Orbital will be in there (as a "Bot") in all the Software Development teams conversations around the world, which some of them could be potential customers for Orbital's software and R&D services.
+* This could be a marketing opportunity for Orbital to expose its brand to more software development firms.
+
+
 ##What problems are we going to solve 
 
 ##Target market 
+
 
 ##How big is the market 
 * There are 11 Million professional developers in the world (http://bit.ly/2i71WEG) 
 * If we imagine all teams on average have 10 members working on the same project, there are **1 Million professional teams**. 
  
- 
+
+
 ##How do we market the product 
 
 ##Bullet list of brainstorms 
