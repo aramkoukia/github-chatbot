@@ -23,6 +23,9 @@ Team collaboration and DevOps in one place
 * This could be a marketing opportunity for Orbital to expose its brand to more software development firms.
 
 ##What problems are we going to solve 
+* DevOps is a very involved task that deals with many different tools, portals, etc, and this can be simplified and encapsulated as a chat bot.
+* Project management, scrum and status report is a time consuming issue, which can be collected by a chat bot and be reported to the whole team so everyone is on the same page.
+* 
 
 ##Target market 
 * All Developer teams 
@@ -42,6 +45,9 @@ Team collaboration and DevOps in one place
 * Can we leverage some Microservices architecture for learning purposes and also for better scalability?
 
 ##Are there any companies doing something similar 
+* Swipes: http://swipesapp.com/slack/ does some of the project management aspects. not sure what is the PM software it integrates with.
+* Howdy: https://www.howdy.ai/  does some of the project management aspects.
+* Scrumbot: https://www.scrumbot.co/ collect's the team's status report, and the leader can get the report from the bot instead of talking to individuals for their status.
 
 ##Ideas for the product name  
 * DevOrb
@@ -52,6 +58,7 @@ Team collaboration and DevOps in one place
 ##Key Features
 * **Development Aspects**
  * Code Review Reminders?
+ * 
 
 * **Build and Release Aspects**
  * Start a build
