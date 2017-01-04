@@ -1,6 +1,8 @@
 # DevOrb
 Team collaboration and DevOps in one place
 
+<img src="https://github.com/daveos/DevOrb/blob/master/Documents/Robot-clip-art.png" width="100">
+
 ##Brief Description / Elevator pitch
 * A lot of software teams (and other teams) use [Slack](https://slack.com/) for their team communication. Microsoft has also released [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) for team collaborations. And also Skype and Skype for Business is used alot for team collaboration. 
 * A Bot for all of these these systems will be real handy that could listen to team conversations and kick of builds, releases, tests, send email communications, project management and other things. 
