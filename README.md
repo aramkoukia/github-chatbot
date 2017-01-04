@@ -58,28 +58,42 @@ Team collaboration and DevOps in one place
 * Service Developer
 
 ##Key Features
+* **Company Onboarding**
+ * Collect company's information, repository security information (VSTS/Github path) etc
+ *
+ 
+* **Project/Component/Environment Onboarding**
+ * Collect Component names, Technology (C#, Java, etc if needed for builds), build definitions, source/repository path etc.
+ * Collect Projects name (each project can have multiple components). Bot needs to know which project to create the items on.
+ * 
+ 
 * **Development Aspects**
  * Code Review Reminders?
  * Submit a Pull Request
- * 
+ * Let the developer know when there is a PR assigned to them
+ * Let the developer know when a PR is complete or there was conflict
+ *
 
 * **Build and Release Aspects**
  * Start a build (specific component)
  * Start a deployment (specific component and specific environment)
+ * Report the status of Build and/or Deployment
+ * 
   
 * **QA Aspects**
  * Run tests (is this possible? Bot might not be aware of the technology of the code!)
  
+ 
 * **Project Management Aspects**
- * Create workitems/ bugs, tasks etc  (The workitems are different in VSTS vs Github)
+ * Create workitems/ bugs, tasks etc (The workitems are different in VSTS vs Github)
  * Collect status report from team members.
  * **Question** Do we integrate with Jira for project management aspects?
+ *
  
 * **Monitoring and Diagnostics Aspects**
  * Monitor environments for errors and report to the team (is this possible? it will only work if the system has some diagnostics implemented)
+ *
  
-
-
 #High Level Architecture
 # Diagram
 ![alt text](https://github.com/daveos/DevOrb/blob/master/Documents/Build%20Release%20Bot.jpg "High Level Architecture Diagram")
