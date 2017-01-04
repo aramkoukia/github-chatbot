@@ -4,15 +4,14 @@ Team collaboration and DevOps in one place
 <img src="https://github.com/daveos/DevOrb/blob/master/Documents/Robot-clip-art.png" width="100">
 
 ##Brief Description / Elevator pitch
-* A lot of software teams (and other teams) use [Slack](https://slack.com/) for their team communication. Microsoft has also released [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) for team collaborations. And also Skype and Skype for Business is used alot for team collaboration. 
-* A Bot for all of these these systems will be real handy that could listen to team conversations and kick of builds, releases, tests, send email communications, project management and other things. 
-* Using Microsoft Bot framework to build these Slack, Microsoft Team, Skype and Skype for Business bots.  
+* A lot of software teams (and other teams) use [Slack](https://slack.com/), [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software), Skype and Skype for Business for team collaboration and communications. 
+* A Bot for all of these systems will be useful. The bot listens to team conversations and start builds, deploy, run tests, send emails, collect daily scrum status report from team members and other things. 
 * Integrate with[Linguistic Analysis API](https://www.microsoft.com/cognitive-services/en-us/linguistic-analysis-api) and [Text Analytics API](https://www.microsoft.com/cognitive-services/en-us/text-analytics-api) for better Bot interactions 
 * **NOTE:** The Linguistic and Text Analytics APIs are not free, and they have pay per call payment policy, which should be considered to see how much will it cost to handle certain number of requests.
   * **Linguistic Analysis API** currently does not have a paid service, and is free and the limit is 5000 calls per month. 
   * **Text Analytics API** is free for 5000 calls per month. for 100K calls it is 150$ per month. for 500K calls it is 500$ per month.
   * Price table: http://bit.ly/2j6sYAk
-* Integrate with VSTS and Github 
+* Integration options: Visual Studio Team Services, Github, Jira, Bitbucket
   * Manage build and deployments (trigger, approve, status report)  
   * Test executions 
   * Report component health 
