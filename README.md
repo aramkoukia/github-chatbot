@@ -45,6 +45,7 @@ Team collaboration and DevOps in one place
 * Can we leverage some Microservices architecture for learning purposes and also for better scalability?
 * How do we setup the bot for build and release? when a bot is added to the conversation, it needs to know and record, the information about the environemts, components, security tokens, etc. User should pass these information to the Bot and we should store them. So next time user asks for a build of component X, we know where the code is (VSTS or Gitgub path) for each company, to start a build.
 * For deployments, we need to know the destination server and all the other stuff that are needed for a deployment (certificates? Azure, vs On-prem?). I think it will only work easily when the deployment is done in some cloud environment (Azure or AWS)
+* Is it better to limit the integration to Github or VSTS for the fist release.
 
 ##Are there any companies doing something similar 
 * Swipes: http://swipesapp.com/slack/ does some of the project management aspects. not sure what is the PM software it integrates with.
