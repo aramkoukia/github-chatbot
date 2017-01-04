@@ -107,7 +107,48 @@ Team collaboration and DevOps in one place
  *
  
 #High Level Architecture
-# Diagram
+## Diagram
 ![alt text](https://github.com/daveos/DevOrb/blob/master/Documents/Build%20Release%20Bot.jpg "High Level Architecture Diagram")
 
+## Technologies for each component
+###  Bot Connector
+* We can use microsoft Bot Framework to register the bot and add the various channels (Slack, Skype and MS Teams) to it.
+
+### Bot Service
+* Asp.Net Web API service. 
+* Hosted in Azure. (AWS?)
+* Recieves messages from the various channels
+
+### Text recognition service (AI)
+* Asp.Net Web API service. 
+* Hosted in Azure. (AWS?)
+* Integrates with Linguistics Analytics API.
+* Integrates with Text Analytics API.
+
+
+### Build, Release, PM service (Seperate service for each aspect?)
+* Asp.Net Web API service. 
+* Hosted in Azure. (AWS?)
+* Integrates with Github.
+* Integrates with VSTS.
+* Integrates with Bitbucket.
+* Integrates with Jira.
+
+### DocumentDB (How about SQL Azure instead? Or AWS equivalent)
+* Stores information about companies, teams, users.
+* Hosted in Azure. (AWS?)
+* Stores information about components, build, environments, projects for each team.
+
+### Security
+#### Bot Service Security
+* Protected with AppId and App Password
+
+#### Text recognition Service Security
+* 
+
+#### Build, Release, PM Service Security
+*
+
+#### DocumentDB Security
+*
 
