@@ -2,8 +2,8 @@
 Team collaboration and DevOps in one place
 
 ##Brief Description / Elevator pitch
-* A lot of software teams (and other teams) use [Slack](https://slack.com/) for their team communication. Microsoft has also released [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) for team collaborations. 
-* A Bot for both these systems will be real handy that could listen to team conversations and kick of builds, releases, tests, send email communications and other things. 
+* A lot of software teams (and other teams) use [Slack](https://slack.com/) for their team communication. Microsoft has also released [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) for team collaborations. And also Skype and Skype for Business is used alot for team collaboration. 
+* A Bot for all of these these systems will be real handy that could listen to team conversations and kick of builds, releases, tests, send email communications, project management and other things. 
 * Using Microsoft Bot framework and build Slack and Microsoft Team  
 * Integrate with This is [Linguistic Analysis API](https://www.microsoft.com/cognitive-services/en-us/linguistic-analysis-api) and [Text Analytics API](https://www.microsoft.com/cognitive-services/en-us/text-analytics-api) for better Bot interactions 
 * **NOTE:** The Linguistic and Text Analytics APIs are not free, and they have pay per call payment policy, which should be considered to see how much will it cost to handle certain number of requests.
