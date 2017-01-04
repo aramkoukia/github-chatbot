@@ -39,13 +39,18 @@ Team collaboration and DevOps in one place
 ##How do we market the product 
 * We will list the Bot in the connector's bot directory and people using those connectors can add them if they want.
 * Aram can engage the MS MVP community and spread the word in that group (around 4000 developers around the world)
+* Orbital website can promote the product, though I don't believe the orbital website gets much traffic.
+* Do we need to launch a dedicated website for this product or will it be part of Orbital website(like this one: http://acebot.ai/)
 * Maybe pay some marketing companies to spread the word with Twitter, Facebook and other social media.
+* 
 
 ##Bullet list of brainstorms 
-* Can we leverage some Microservices architecture for learning purposes and also for better scalability?
+* Can we leverage some Microservices architecture for learning purposes and also for better scalability and performance?
+* Some of the API calls like build and release, could take long to finish, so we need to think of mechanisms to notify the bot or the person who initiated the request when it is finished.
 * How do we setup the bot for build and release? when a bot is added to the conversation, it needs to know and record, the information about the environemts, components, security tokens, etc. User should pass these information to the Bot and we should store them. So next time user asks for a build of component X, we know where the code is (VSTS or Gitgub path) for each company, to start a build.
 * For deployments, we need to know the destination server and all the other stuff that are needed for a deployment (certificates? Azure, vs On-prem?). I think it will only work easily when the deployment is done in some cloud environment (Azure or AWS)
 * Is it better to limit the integration to Github or VSTS for the fist release.
+
 
 ##Are there any companies doing something similar 
 * Swipes: http://swipesapp.com/slack/ does some of the project management aspects. not sure what is the PM software it integrates with.
