@@ -4,8 +4,8 @@ Team collaboration and DevOps in one place
 ##Brief Description / Elevator pitch
 * A lot of software teams (and other teams) use [Slack](https://slack.com/) for their team communication. Microsoft has also released [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) for team collaborations. And also Skype and Skype for Business is used alot for team collaboration. 
 * A Bot for all of these these systems will be real handy that could listen to team conversations and kick of builds, releases, tests, send email communications, project management and other things. 
-* Using Microsoft Bot framework and build Slack and Microsoft Team  
-* Integrate with This is [Linguistic Analysis API](https://www.microsoft.com/cognitive-services/en-us/linguistic-analysis-api) and [Text Analytics API](https://www.microsoft.com/cognitive-services/en-us/text-analytics-api) for better Bot interactions 
+* Using Microsoft Bot framework to build these Slack, Microsoft Team, Skype and Skype for Business bots.  
+* Integrate with[Linguistic Analysis API](https://www.microsoft.com/cognitive-services/en-us/linguistic-analysis-api) and [Text Analytics API](https://www.microsoft.com/cognitive-services/en-us/text-analytics-api) for better Bot interactions 
 * **NOTE:** The Linguistic and Text Analytics APIs are not free, and they have pay per call payment policy, which should be considered to see how much will it cost to handle certain number of requests.
   * **Linguistic Analysis API** currently does not have a paid service, and is free and the limit is 5000 calls per month. 
   * **Text Analytics API** is free for 5000 calls per month. for 100K calls it is 150$ per month. for 500K calls it is 500$ per month.
@@ -58,21 +58,24 @@ Team collaboration and DevOps in one place
 ##Key Features
 * **Development Aspects**
  * Code Review Reminders?
+ * Submit a Pull Request
  * 
 
 * **Build and Release Aspects**
- * Start a build
- * Start a deployment
- 
+ * Start a build (specific component)
+ * Start a deployment (specific component and specific environment)
+  
 * **QA Aspects**
- * Run tests
+ * Run tests (is this possible? Bot might not be aware of the technology of the code!)
  
 * **Project Management Aspects**
- * Create workitems/ bugs, tasks etc
+ * Create workitems/ bugs, tasks etc  (The workitems are different in VSTS vs Github)
  * Collect status report from team members.
+ * **Question** Do we integrate with Jira for project management aspects?
  
 * **Monitoring and Diagnostics Aspects**
- * Monitor environments for errors and report to the team
+ * Monitor environments for errors and report to the team (is this possible? it will only work if the system has some diagnostics implemented)
+ 
 
 
 #High Level Architecture
