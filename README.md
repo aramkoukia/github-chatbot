@@ -59,6 +59,11 @@ Team collaboration and DevOps in one place
 
 ##Ideas for the product name  
 * DevOrb
+* DevOps Bot
+* DevOps AI
+* DevOps Ninja
+* DevOps Robot
+* DevOps Hero
 
 ##Skills and Team
 * Service Developer
