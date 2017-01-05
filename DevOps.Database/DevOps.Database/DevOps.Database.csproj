@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1B4A26C9-7363-4766-A2D2-1D5AC86641F6}</ProjectGuid>
+    <ProjectGuid>{9E871B52-F8AC-413A-9625-5A02C9F7281C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DevOps.Interfaces</RootNamespace>
-    <AssemblyName>DevOps.Interfaces</AssemblyName>
+    <RootNamespace>DevOps.Database</RootNamespace>
+    <AssemblyName>DevOps.Database</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
