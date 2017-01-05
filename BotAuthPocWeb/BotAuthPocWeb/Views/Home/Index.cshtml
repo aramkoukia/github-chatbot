@@ -1,0 +1,42 @@
+﻿@model Microsoft.AspNet.Identity.Owin.ExternalLoginInfo
+
+@{
+    ViewBag.Title = "DevOps Bot";
+}
+
+<div class="jumbotron">
+    @if (Model != null)
+    {
+        <h1>
+            Welcome:  @Model.DefaultUserName
+        </h1>
+        <h3>
+            Email: @Model.Email
+        </h3>
+        <h3>
+            Access Token: @Model.ExternalIdentity.Claims.FirstOrDefault(m=>m.Type == "urn:github:accesstoken").Value
+        </h3>
+    }
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Features</h2>
+        <p>Create Tasks</p>
+        <p>Create Pull Requests</p>
+        <p>Start builds</p>
+        <p>Start Deployments</p>
+        <p>Collect Daily Status</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Supported Channels</h2>
+        <p>Slack</p>
+        <p>Microsoft Teams</p>
+        <p>Skype</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Contact Us</h2>
+        <p><a href="http://www.orbitaltech.com/" target="_blank">Orbital Technologies</a></p>
+        <p></p>
+    </div>
+</div>

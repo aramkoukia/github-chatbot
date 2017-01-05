@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotAuthPoc", "BotAuthPoc\BotAuthPoc.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotAuthPocWeb", "..\BotAuthPocWeb\BotAuthPocWeb\BotAuthPocWeb.csproj", "{B93288A2-320E-4BEC-B61F-4B362E345335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owin.Security.Providers.GitHub", "Owin.Security.Providers.GitHub\Owin.Security.Providers.GitHub.csproj", "{803F9EB7-029C-45AC-AB81-135E60D5BEAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B93288A2-320E-4BEC-B61F-4B362E345335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B93288A2-320E-4BEC-B61F-4B362E345335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B93288A2-320E-4BEC-B61F-4B362E345335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B93288A2-320E-4BEC-B61F-4B362E345335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{803F9EB7-029C-45AC-AB81-135E60D5BEAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{803F9EB7-029C-45AC-AB81-135E60D5BEAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{803F9EB7-029C-45AC-AB81-135E60D5BEAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{803F9EB7-029C-45AC-AB81-135E60D5BEAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

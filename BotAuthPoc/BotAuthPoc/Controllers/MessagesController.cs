@@ -26,78 +26,110 @@ namespace BotAuthPoc
 
             if (activity.Type == ActivityTypes.Message)
             {
-                if (activity.Text == "login")
+                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                if (activity.Text == "name")
                 {
-                    ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                    Activity reply = activity.CreateReply($"{Uri.EscapeDataString(activity.From.Id)}");
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
+                if (activity.Text == "token")
+                {
+                    StateClient stateClient = activity.GetStateClient();
+                    BotState botState = new BotState(stateClient);
+                    BotData botData = await botState.GetUserDataAsync(activity.ChannelId, activity.From.Id);
+                    string token = botData.GetProperty<string>("AccessToken");
 
+                    Activity reply = activity.CreateReply($"token: {token}");
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
+                else if (activity.Text == "login")
+                {
                     Activity replyToConversation = activity.CreateReply();
                     replyToConversation.Recipient = activity.From;
                     replyToConversation.Type = "message";
 
                     replyToConversation.Attachments = new List<Attachment>();
                     List<CardAction> cardButtons = new List<CardAction>();
+                    //CardAction plButton = new CardAction()
+                    //{
+                    //    Value = "http://botauthpocweb.azurewebsites.net/Home/Github",
+                    //    Type = "signin",
+                    //    Title = "VSTS"
+                    //};
+
                     CardAction plButton = new CardAction()
                     {
-                        Value = $"{System.Configuration.ConfigurationManager.AppSettings["AppWebSite"]}/Home/Login?userid={HttpUtility.UrlEncode(activity.From.Id)}",
-                        Type = "signin",
-                        Title = "VSTS"
-                    };
-
-                    CardAction plButton1 = new CardAction()
-                    {
-                        Value = $"{System.Configuration.ConfigurationManager.AppSettings["AppWebSite"]}/Home/Login?userid={HttpUtility.UrlEncode(activity.From.Id)}",
+                        Value = "https://botauthpocweb.azurewebsites.net/Home/Github?username=" + Uri.EscapeDataString(activity.From.Id),
                         Type = "signin",
                         Title = "GitHub"
                     };
 
-
                     cardButtons.Add(plButton);
-                    cardButtons.Add(plButton1);
-                    SigninCard plCard = new SigninCard("Please login", new List<CardAction>() { plButton, plButton1 });
+                    //cardButtons.Add(plButton1);
+                    SigninCard plCard = new SigninCard("Please login", new List<CardAction>() { plButton });
                     Attachment plAttachment = plCard.ToAttachment();
                     replyToConversation.Attachments.Add(plAttachment);
 
                     var reply = await connector.Conversations.SendToConversationAsync(replyToConversation);
                 }
-                else if (activity.Text == "get mail")
+                else if (activity.Text == "repos")
                 {
                     // Get access token from bot state
-                    ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                    StateClient stateClient = activity.GetStateClient();
-                    BotState botState = new BotState(stateClient);
-                    BotData botData = await botState.GetUserDataAsync(activity.ChannelId, activity.From.Id);
-                    string token = botData.GetProperty<string>("AccessToken");
-
-                    // Get recent 10 e-mail from Office 365
-                    HttpClient cl = new HttpClient();
-                    var acceptHeader =
-                        new MediaTypeWithQualityHeaderValue("application/json");
-                    cl.DefaultRequestHeaders.Accept.Add(acceptHeader);
-                    cl.DefaultRequestHeaders.Authorization
-                      = new AuthenticationHeaderValue("Bearer", token);
-                    HttpResponseMessage httpRes =
-                      await cl.GetAsync("https://outlook.office365.com/api/v1.0/me/messages?$orderby=DateTimeSent%20desc&$top=10&$select=Subject,From");
-                    if (httpRes.IsSuccessStatusCode)
+                    try
                     {
-                        var strRes = httpRes.Content.ReadAsStringAsync().Result;
-                        JObject jRes = await httpRes.Content.ReadAsAsync<JObject>();
-                        JArray jValue = (JArray)jRes["value"];
-                        foreach (JObject jItem in jValue)
+                        StateClient stateClient = activity.GetStateClient();
+                        BotState botState = new BotState(stateClient);
+                        BotData botData = await botState.GetUserDataAsync(activity.ChannelId, activity.From.Id);
+                        string token = botData.GetProperty<string>("AccessToken");
+
+                        // Get recent 10 e-mail from Office 365
+                        HttpClient cl = new HttpClient();
+                        //var acceptHeader = new MediaTypeWithQualityHeaderValue("application/json");
+                        //cl.DefaultRequestHeaders.Accept.Add(acceptHeader);
+
+                        //Activity reply = activity.CreateReply($"token: {token}");
+                        //await connector.Conversations.ReplyToActivityAsync(reply);
+
+                        //var reply = activity.CreateReply($"token {token}");
+                        //await connector.Conversations.ReplyToActivityAsync(reply);
+
+                        cl.DefaultRequestHeaders.Add("User-Agent", "Anything");
+
+                        cl.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
+                        HttpResponseMessage httpRes = await cl.GetAsync("https://api.github.com/user/repos");
+
+                        //reply = activity.CreateReply($"url https://api.github.com/user/repos");
+                        //await connector.Conversations.ReplyToActivityAsync(reply);
+
+                        if (httpRes.IsSuccessStatusCode)
                         {
-                            Activity reply = activity.CreateReply($"Subject={((JValue)jItem["Subject"]).Value}");
+
+                            //var reply = activity.CreateReply($"was successful {httpRes.IsSuccessStatusCode}");
+                            //await connector.Conversations.ReplyToActivityAsync(reply);
+
+                            var strRes = await httpRes.Content.ReadAsStringAsync();
+                            var reply = activity.CreateReply(strRes.Substring(1,50));
+                            await connector.Conversations.ReplyToActivityAsync(reply);
+                        }
+                        else
+                        {
+                            //var reply = activity.CreateReply($"was not successful {httpRes.IsSuccessStatusCode}");
+                            //await connector.Conversations.ReplyToActivityAsync(reply);
+
+                            var reply = activity.CreateReply("Failed to get repos.\n\nPlease type \"login\" before you get repos.");
                             await connector.Conversations.ReplyToActivityAsync(reply);
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Activity reply = activity.CreateReply("Failed to get e-mail.\n\nPlease type \"login\" before you get e-mail.");
+                        Activity reply = activity.CreateReply($"error: {ex.InnerException.Message}");
                         await connector.Conversations.ReplyToActivityAsync(reply);
                     }
+
                 }
                 else
                 {
-                    ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                    Activity reply = activity.CreateReply("# Bot Help\n\nlogin -- Login to Office 365\n\nget mail -- Get your e-mail from Office 365");
+                    Activity reply = activity.CreateReply("# Bot Help\n\nlogin -- Login to github");
                     await connector.Conversations.ReplyToActivityAsync(reply);
                 }
             }
