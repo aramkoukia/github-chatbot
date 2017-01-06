@@ -11,13 +11,13 @@ namespace DevOps.Dialogs
     [Serializable]
     public class RootDialog : IDialog<object>
     {
-        private readonly ICodeRepositoryDialogs _codeRepositoryWorkflows;
-        public RootDialog(ICodeRepositoryDialogs codeRepositoryWorkflows)
+        //private readonly ICodeRepositoryDialogs _codeRepositoryWorkflows;
+        public RootDialog()
         {
-            if (codeRepositoryWorkflows == null)
-                throw new ArgumentNullException(nameof(codeRepositoryWorkflows));
+            //if (codeRepositoryWorkflows == null)
+            //    throw new ArgumentNullException(nameof(codeRepositoryWorkflows));
 
-            _codeRepositoryWorkflows = codeRepositoryWorkflows;
+            //_codeRepositoryWorkflows = codeRepositoryWorkflows;
 
         }
 
@@ -36,7 +36,7 @@ namespace DevOps.Dialogs
 
             if (message.Text.ToLower().Contains("help") || message.Text.ToLower().Contains("support") || message.Text.ToLower().Contains("problem"))
             {
-                await context.Forward(new SupportDialog(), this.ResumeAfterSupportDialog, message, CancellationToken.None);
+                await context.Forward(new SupportDialog(), ResumeAfterSupportDialog, message, CancellationToken.None);
             }
             else
             {
@@ -70,7 +70,7 @@ namespace DevOps.Dialogs
             {
                 await context.PostAsync($"Ooops! Too many attemps :(. But don't worry, I'm handling that exception and you can try again!");
 
-                context.Wait(this.MessageReceivedAsync);
+                context.Wait(MessageReceivedAsync);
             }
         }
 
@@ -79,7 +79,7 @@ namespace DevOps.Dialogs
             var ticketNumber = await result;
 
             await context.PostAsync($"Thanks for contacting our support team. Your ticket number is {ticketNumber}.");
-            context.Wait(this.MessageReceivedAsync);
+            context.Wait(MessageReceivedAsync);
         }
 
         private async Task ResumeAfterOptionDialog(IDialogContext context, IAwaitable<object> result)

@@ -16,29 +16,31 @@ namespace DevOps.Dialogs
     {
         public async Task StartAsync(IDialogContext context)
         {
-            await context.PostAsync("Welcome to issues manager!");
+            await context.PostAsync("Welcome to issues manager.");
 
-            var hotelsFormDialog = FormDialog.FromForm(BuildHotelsForm, FormOptions.PromptInStart);
+            var hotelsFormDialog = FormDialog.FromForm(BuildIssuesForm, FormOptions.PromptInStart);
 
-            context.Call(hotelsFormDialog, ResumeAfterHotelsFormDialog);
+            context.Call(hotelsFormDialog, ResumeAfterIssuesFormDialog);
         }
 
-        private IForm<IssuesQuery> BuildHotelsForm()
+        private IForm<IssuesQuery> BuildIssuesForm()
         {
-            OnCompletionAsyncDelegate<IssuesQuery> processHotelsSearch = async (context, state) =>
+            OnCompletionAsyncDelegate<IssuesQuery> processIssuesCreation = async (context, state) =>
             {
-                await context.PostAsync($"Ok. Searching for Hotels in {state.Title} from to ...");
+                await context.PostAsync($"Ok. Issue created with title: {state.Title}.");
+
+                //await context.PostAsync($"Ok. Creating an issue with title: {state.Title}.");
             };
 
             return new FormBuilder<IssuesQuery>()
-                .Field(nameof(IssuesQuery.Title))
-                .Message("Looking for hotels in {Destination}...")
+                //.Field(nameof(IssuesQuery.Title))
+                //.Message("Creating an issue with title: {Title}...")
                 .AddRemainingFields()
-                .OnCompletion(processHotelsSearch)
+                .OnCompletion(processIssuesCreation)
                 .Build();
         }
 
-        private async Task ResumeAfterHotelsFormDialog(IDialogContext context, IAwaitable<IssuesQuery> result)
+        private async Task ResumeAfterIssuesFormDialog(IDialogContext context, IAwaitable<IssuesQuery> result)
         {
             try
             {
@@ -46,7 +48,7 @@ namespace DevOps.Dialogs
 
                 var issues = await GetHotelsAsync(searchQuery);
 
-                await context.PostAsync($"I found in total {issues.Count()} hotels for your dates:");
+                await context.PostAsync($"I found in total {issues.Count()} issues assigned to you:");
 
                 var resultMessage = context.MakeMessage();
                 resultMessage.AttachmentLayout = AttachmentLayoutTypes.Carousel;
@@ -56,15 +58,15 @@ namespace DevOps.Dialogs
                 {
                     HeroCard heroCard = new HeroCard()
                     {
-                        Title = "sdff",
-                        Subtitle = "sdf",
+                        Title = "Title",
+                        Subtitle = "Issue Body",
                         Buttons = new List<CardAction>()
                         {
                             new CardAction()
                             {
                                 Title = "More details",
                                 Type = ActionTypes.OpenUrl,
-                                Value = $"https://www.bing.com/search?q=hotels+in+"
+                                Value = $"https://koukia.ca"
                             }
                         }
                     };

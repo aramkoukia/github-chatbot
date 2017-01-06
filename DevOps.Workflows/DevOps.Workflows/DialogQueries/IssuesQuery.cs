@@ -6,11 +6,11 @@ namespace DevOps.Dialogs
     [Serializable]
     public class IssuesQuery
     {
-        [Prompt("Please enter issue title {&}")]
+        [Prompt("Please enter issue {&}")]
         public string Title { get; set; }
 
-        [Prompt("Enter more detail for the body {&}?")]
-        public DateTime Body { get; set; }
+        [Prompt("Enter more detail for the {&}?")]
+        public string Body { get; set; }
 
         //[Numeric(1, int.MaxValue)]
         //[Prompt("How many {&} do you want to stay?")]
