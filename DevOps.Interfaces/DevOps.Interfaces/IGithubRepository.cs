@@ -6,6 +6,6 @@ namespace DevOps.Interfaces
 {
     public interface IGithubRepository
     {
-        Task<IEnumerable<CodeRepository>> GetCodeRepositories();
+        Task<IEnumerable<CodeRepository>> GetCodeRepositories(string token);
     }
 }
