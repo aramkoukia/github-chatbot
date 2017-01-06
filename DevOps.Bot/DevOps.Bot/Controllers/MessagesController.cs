@@ -10,21 +10,23 @@ using Newtonsoft.Json;
 using DevOps.Interfaces;
 using DevOps.Common;
 using System.Collections.Generic;
+using Microsoft.Bot.Builder.Dialogs;
+using DevOps.Dialogs;
 
 namespace DevOps.Bot
 {
     [BotAuthentication]
     public class MessagesController : ApiController
     {
-        private readonly IDevelopementWorkflows _developementWorkflows;
+        private readonly ICodeRepositoryDialogs _codeRepositoryWorkflows;
         private readonly ITokenHelper _tokenHelper;
 
-        public MessagesController(IDevelopementWorkflows developementWorkflows, ITokenHelper tokenHelper)
+        public MessagesController(ICodeRepositoryDialogs codeRepositoryWorkflows, ITokenHelper tokenHelper)
         {
-            if (developementWorkflows == null)
-                throw new ArgumentNullException(nameof(developementWorkflows));
+            if (codeRepositoryWorkflows == null)
+                throw new ArgumentNullException(nameof(codeRepositoryWorkflows));
 
-            _developementWorkflows = developementWorkflows;
+            _codeRepositoryWorkflows = codeRepositoryWorkflows;
             _tokenHelper = tokenHelper;
         }
         /// <summary>
@@ -35,71 +37,73 @@ namespace DevOps.Bot
         {
             if (activity!= null && activity.Type == ActivityTypes.Message)
             {
-                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                var replyToConversation = activity.CreateReply();
-                switch (activity.Text.ToLower())
-                {
-                    case BotCommands.Login:
+                await Conversation.SendAsync(activity, () => new RootDialog());
 
-                        var token = await _tokenHelper.GetGithubToken(activity);
-                        if (string.IsNullOrEmpty(token))
-                        {
-                            replyToConversation.Recipient = activity.From;
-                            replyToConversation.Type = "message";
+                //ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                //var replyToConversation = activity.CreateReply();
+                //switch (activity.Text.ToLower())
+                //{
+                //    case BotCommands.Login:
 
-                            replyToConversation.Attachments = new List<Attachment>();
-                            List<CardAction> cardButtons = new List<CardAction>();
-                            CardAction plButton = new CardAction()
-                            {
-                                Value = "https://orbitaldevopsweb.azurewebsites.net/Home/Github?username=" + Uri.EscapeDataString(activity.From.Id),
-                                Type = "signin",
-                                Title = "GitHub"
-                            };
+                //        var token = await _tokenHelper.GetGithubToken(activity);
+                //        if (string.IsNullOrEmpty(token))
+                //        {
+                //            replyToConversation.Recipient = activity.From;
+                //            replyToConversation.Type = "message";
 
-                            cardButtons.Add(plButton);
-                            SigninCard plCard = new SigninCard("Please login", new List<CardAction>() { plButton });
-                            Attachment plAttachment = plCard.ToAttachment();
-                            replyToConversation.Attachments.Add(plAttachment);
+                //            replyToConversation.Attachments = new List<Attachment>();
+                //            List<CardAction> cardButtons = new List<CardAction>();
+                //            CardAction plButton = new CardAction()
+                //            {
+                //                Value = "https://orbitaldevopsweb.azurewebsites.net/Home/Github?username=" + Uri.EscapeDataString(activity.From.Id),
+                //                Type = "signin",
+                //                Title = "GitHub"
+                //            };
 
-                            await connector.Conversations.SendToConversationAsync(replyToConversation);
-                        }
-                        else
-                        {
-                            var reply1 = activity.CreateReply("You are already signed in.");
-                            await connector.Conversations.ReplyToActivityAsync(reply1);
-                        }
+                //            cardButtons.Add(plButton);
+                //            SigninCard plCard = new SigninCard("Please login", new List<CardAction>() { plButton });
+                //            Attachment plAttachment = plCard.ToAttachment();
+                //            replyToConversation.Attachments.Add(plAttachment);
 
-                        break;
+                //            await connector.Conversations.SendToConversationAsync(replyToConversation);
+                //        }
+                //        else
+                //        {
+                //            var reply1 = activity.CreateReply("You are already signed in.");
+                //            await connector.Conversations.ReplyToActivityAsync(reply1);
+                //        }
 
-                    case BotCommands.ListRepositories:
-                        var repositories = await _developementWorkflows.GetCodeRepositories(activity);
-                        if(repositories == null || !repositories.Any())
-                        { 
-                            var reply2 = activity.CreateReply("You are already signed in.");
-                            await connector.Conversations.ReplyToActivityAsync(reply2);
-                        }
+                //        break;
 
-                        replyToConversation = activity.CreateReply();
-                        replyToConversation.Recipient = activity.From;
-                        replyToConversation.Type = "message";
-                        replyToConversation.Text = $"You have access to {repositories.Count()} Code Repositories. See following for details:";
-                        await connector.Conversations.SendToConversationAsync(replyToConversation);
+                //    case BotCommands.ListRepositories:
+                //        var repositories = await _developementWorkflows.GetCodeRepositories(activity);
+                //        if(repositories == null || !repositories.Any())
+                //        { 
+                //            var reply2 = activity.CreateReply("You are already signed in.");
+                //            await connector.Conversations.ReplyToActivityAsync(reply2);
+                //        }
 
-                        foreach (var item in repositories)
-                        {
-                            replyToConversation = activity.CreateReply();
-                            replyToConversation.Recipient = activity.From;
-                            replyToConversation.Type = "message";
-                            replyToConversation.Text = $"Fullname: {item.FullName}, Name: {item.Name}, Id: {item.Id}, Owner: {item.Owner}.";
-                            await connector.Conversations.SendToConversationAsync(replyToConversation);
-                        }
-                        break;
+                //        replyToConversation = activity.CreateReply();
+                //        replyToConversation.Recipient = activity.From;
+                //        replyToConversation.Type = "message";
+                //        replyToConversation.Text = $"You have access to {repositories.Count()} Code Repositories. See following for details:";
+                //        await connector.Conversations.SendToConversationAsync(replyToConversation);
 
-                    default:
-                        var reply3 = activity.CreateReply("Not supported.");
-                        await connector.Conversations.ReplyToActivityAsync(reply3);
-                        break;
-                }
+                //        foreach (var item in repositories)
+                //        {
+                //            replyToConversation = activity.CreateReply();
+                //            replyToConversation.Recipient = activity.From;
+                //            replyToConversation.Type = "message";
+                //            replyToConversation.Text = $"Fullname: {item.FullName}, Name: {item.Name}, Id: {item.Id}, Owner: {item.Owner}.";
+                //            await connector.Conversations.SendToConversationAsync(replyToConversation);
+                //        }
+                //        break;
+
+                //    default:
+                //        var reply3 = activity.CreateReply("Not supported.");
+                //        await connector.Conversations.ReplyToActivityAsync(reply3);
+                //        break;
+                //}
 
 
             }

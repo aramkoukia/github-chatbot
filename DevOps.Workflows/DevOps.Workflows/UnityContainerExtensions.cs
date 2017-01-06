@@ -2,7 +2,7 @@
 using Microsoft.Practices.Unity;
 using System;
 
-namespace DevOps.Workflows
+namespace DevOps.Dialogs
 {
     public static class UnityContainerExtensions
     {
@@ -11,7 +11,7 @@ namespace DevOps.Workflows
             if (unityContainer == null)
                 throw new ArgumentNullException("unityContainer");
 
-            unityContainer.RegisterType<IDevelopementWorkflows, DevelopmentWorkflows>();
+            unityContainer.RegisterType<ICodeRepositoryDialogs, CodeRepositoryDialogs>();
             return unityContainer;
         }
     }

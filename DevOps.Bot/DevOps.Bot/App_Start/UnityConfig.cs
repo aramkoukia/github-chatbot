@@ -1,6 +1,6 @@
 ﻿using DevOps.Common;
 using DevOps.Github;
-using DevOps.Workflows;
+using DevOps.Dialogs;
 using Microsoft.Practices.Unity;
 using System.Web.Http;
 using Unity.WebApi;

@@ -1,20 +1,24 @@
 ﻿using DevOps.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DevOps.Contracts;
 using Microsoft.Bot.Connector;
+using Microsoft.Bot.Builder.Dialogs;
 
-namespace DevOps.Workflows
+namespace DevOps.Dialogs
 {
-    public class DevelopmentWorkflows : IDevelopementWorkflows
+    public class CodeRepositoryDialogs : ICodeRepositoryDialogs, IDialog<object>
     {
         private readonly IGithubRepository _githubRepository;
         private readonly ITokenHelper _tokenHelper;
 
-        public DevelopmentWorkflows(IGithubRepository githubRepository, ITokenHelper tokenHelper)
+        public CodeRepositoryDialogs()
+        {
+
+        }
+
+        public CodeRepositoryDialogs(IGithubRepository githubRepository, ITokenHelper tokenHelper)
         {
             if (githubRepository == null)
                 throw new ArgumentNullException(nameof(githubRepository));
@@ -30,6 +34,11 @@ namespace DevOps.Workflows
         {
             var token = await _tokenHelper.GetGithubToken(activity);
             return await _githubRepository.GetCodeRepositories(token);
+        }
+
+        public Task StartAsync(IDialogContext context)
+        {
+            throw new NotImplementedException();
         }
     }
 }

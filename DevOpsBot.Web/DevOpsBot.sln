@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Github.Auth", "..\De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Contracts", "..\DevOps.Contracts\DevOps.Contracts\DevOps.Contracts.csproj", "{59C73EDC-2869-4978-A2DA-4658025CBC96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Workflows", "..\DevOps.Workflows\DevOps.Workflows\DevOps.Workflows.csproj", "{46EFD2BA-E87A-4210-9107-992E12CC1FAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.Dialogs", "..\DevOps.Workflows\DevOps.Workflows\DevOps.Dialogs.csproj", "{46EFD2BA-E87A-4210-9107-992E12CC1FAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOps.IntegrationTests", "..\DevOps.Tests\DevOps.IntegrationTests\DevOps.IntegrationTests.csproj", "{A41A469D-866B-41EF-93C0-D4AF652C24F7}"
 EndProject

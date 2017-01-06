@@ -185,9 +185,9 @@
       <Project>{1B4A26C9-7363-4766-A2D2-1D5AC86641F6}</Project>
       <Name>DevOps.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DevOps.Workflows\DevOps.Workflows\DevOps.Workflows.csproj">
+    <ProjectReference Include="..\..\DevOps.Workflows\DevOps.Workflows\DevOps.Dialogs.csproj">
       <Project>{46efd2ba-e87a-4210-9107-992e12cc1fae}</Project>
-      <Name>DevOps.Workflows</Name>
+      <Name>DevOps.Dialogs</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

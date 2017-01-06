@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DevOps.Interfaces
 {
-    public interface IDevelopementWorkflows
+    public interface ICodeRepositoryDialogs
     {
         Task<IEnumerable<CodeRepository>> GetCodeRepositories(Activity activity);
     }

@@ -1,5 +1,8 @@
-﻿namespace DevOps.Contracts
+﻿using System;
+
+namespace DevOps.Contracts
 {
+    [Serializable]
     public class CodeRepository
     {
         public string Id { get; set; }
