@@ -7,7 +7,7 @@ namespace DevOps.Bot
 {
     public static class UnityConfig
     {
-        public static void RegisterComponents()
+        public static IUnityContainer RegisterComponents()
         {
 			var container = new UnityContainer();
 
@@ -16,6 +16,7 @@ namespace DevOps.Bot
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
 
+            return container;
         }
     }
 }
