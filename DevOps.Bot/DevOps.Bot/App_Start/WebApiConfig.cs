@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using DevOps.Bot.Filters;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 
 namespace DevOps.Bot
@@ -32,6 +30,8 @@ namespace DevOps.Bot
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Filters.Add(new GlobalExceptionFilterAttribute());
         }
     }
 }
