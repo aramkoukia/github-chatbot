@@ -123,6 +123,10 @@
       <Project>{59c73edc-2869-4978-a2da-4658025cbc96}</Project>
       <Name>DevOps.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DevOps.Github\DevOps.Github\DevOps.Github.csproj">
+      <Project>{3F8F8DB2-2250-489C-9FBB-B5AB010AF00A}</Project>
+      <Name>DevOps.Github</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DevOps.Interfaces\DevOps.Interfaces\DevOps.Interfaces.csproj">
       <Project>{1B4A26C9-7363-4766-A2D2-1D5AC86641F6}</Project>
       <Name>DevOps.Interfaces</Name>

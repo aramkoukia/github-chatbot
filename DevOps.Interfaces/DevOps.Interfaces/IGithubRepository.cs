@@ -7,5 +7,7 @@ namespace DevOps.Interfaces
     public interface IGithubRepository
     {
         Task<IEnumerable<CodeRepository>> GetCodeRepositories(string token);
+
+        Task<Issue> CreateIssue(Issue issue, string token);
     }
 }

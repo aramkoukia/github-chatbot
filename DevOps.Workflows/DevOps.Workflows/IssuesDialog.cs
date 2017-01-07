@@ -8,25 +8,46 @@ using Microsoft.Bot.Connector;
 using DevOps.Contracts;
 using DevOps.Dialogs;
 using System.Web;
+using DevOps.Interfaces;
+using DevOps.Github;
 
 namespace DevOps.Dialogs
 {
     [Serializable]
     public class IssuesDialog : IDialog<object>
     {
+        private readonly IGithubRepository _githubRepository;
+        private readonly ITokenHelper _tokenHelper;
+
+        public IssuesDialog()
+        {
+
+        }
+
+        public IssuesDialog(IGithubRepository githubRepository, ITokenHelper tokenHelper)
+        {
+            _githubRepository = githubRepository;
+            _tokenHelper = tokenHelper;
+        }
+
         public async Task StartAsync(IDialogContext context)
         {
             await context.PostAsync("Welcome to issues manager.");
 
-            var hotelsFormDialog = FormDialog.FromForm(BuildIssuesForm, FormOptions.PromptInStart);
+            var issuesFormDialog = FormDialog.FromForm(BuildIssuesForm, FormOptions.PromptInStart);
 
-            context.Call(hotelsFormDialog, ResumeAfterIssuesFormDialog);
+            context.Call(issuesFormDialog, ResumeAfterIssuesFormDialog);
         }
 
         private IForm<IssuesQuery> BuildIssuesForm()
         {
             OnCompletionAsyncDelegate<IssuesQuery> processIssuesCreation = async (context, state) =>
             {
+                // TODO: cast IActivity to Activity
+                var token = "961ac7b8c3c654fde4d437d3502a3b8aece8eb22"; //_tokenHelper.GetGithubToken(context.Activity);
+                // TODO: use unity and the interface instead
+                var repo = new GithubRepository();
+                var result = await repo.CreateIssue(new Issue() { Title = state.Title, Body = state.Body }, token);
                 await context.PostAsync($"Ok. Issue created with title: {state.Title}.");
 
                 //await context.PostAsync($"Ok. Creating an issue with title: {state.Title}.");
@@ -46,7 +67,7 @@ namespace DevOps.Dialogs
             {
                 var searchQuery = await result;
 
-                var issues = await GetHotelsAsync(searchQuery);
+                var issues = await GetIssuesAsync(searchQuery);
 
                 await context.PostAsync($"I found in total {issues.Count()} issues assigned to you:");
 
@@ -82,7 +103,7 @@ namespace DevOps.Dialogs
 
                 if (ex.InnerException == null)
                 {
-                    reply = "You have canceled the operation. Quitting from the HotelsDialog";
+                    reply = "You have canceled the operation. Quitting from the IssuesDialog";
                 }
                 else
                 {
@@ -97,28 +118,18 @@ namespace DevOps.Dialogs
             }
         }
 
-        private async Task<IEnumerable<Issue>> GetHotelsAsync(IssuesQuery searchQuery)
+        private async Task<IEnumerable<Issue>> GetIssuesAsync(IssuesQuery searchQuery)
         {
             var issues = new List<Issue>();
-
-            // Filling the hotels results manually just for demo purposes
             for (int i = 1; i <= 5; i++)
             {
                 var random = new Random(i);
-                Issue hotel = new Issue()
+                Issue issue = new Issue()
                 {
-                    //Name = $"{searchQuery.Destination} Hotel {i}",
-                    //Location = searchQuery.Destination,
-                    //Rating = random.Next(1, 5),
-                    //NumberOfReviews = random.Next(0, 5000),
-                    //PriceStarting = random.Next(80, 450),
-                    //Image = $"https://placeholdit.imgix.net/~text?txtsize=35&txt=Hotel+{i}&w=500&h=260"
                 };
 
-                issues.Add(hotel);
+                issues.Add(issue);
             }
-
-            //issues.Sort((h1, h2) => h1.PriceStarting.CompareTo(h2.PriceStarting));
 
             return issues;
         }
