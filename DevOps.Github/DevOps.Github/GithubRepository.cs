@@ -15,8 +15,6 @@ namespace DevOps.Github
     {
         private static string GithubBaseUrl = "https://api.github.com";
         private static string CodeRepositoriesUrl = "/user/repos";
-        // TODO: the repo and owner should not be hardcoded, user should select them
-        private static string IssuesUrl = "/repos/daveos/DevOrb/issues";
 
         public async Task<IEnumerable<CodeRepository>> GetCodeRepositories(string token)
         {
@@ -56,7 +54,11 @@ namespace DevOps.Github
 
             var param = JsonConvert.SerializeObject(new { title = issue.Title, body = issue.Body });
             HttpContent contentPost = new StringContent(param, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await httpClient.PostAsync(GithubBaseUrl + IssuesUrl, contentPost);
+
+            // TODO: the repo and owner should not be hardcoded, user should select them
+            var issuesUrl = $"/repos/daveos/{issue.Repository}/issues";
+
+            HttpResponseMessage response = await httpClient.PostAsync(GithubBaseUrl + issuesUrl, contentPost);
             return issue;
         }
 

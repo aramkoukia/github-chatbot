@@ -37,7 +37,8 @@ namespace DevOps.Bot
         {
             if (activity!= null && activity.Type == ActivityTypes.Message)
             {
-                await Conversation.SendAsync(activity, () => new RootDialog());
+                //await Conversation.SendAsync(activity, () => new RootDialog());
+                await Conversation.SendAsync(activity, () => new RootLuisDialog());
 
                 //ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 //var replyToConversation = activity.CreateReply();
