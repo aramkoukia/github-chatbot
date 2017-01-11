@@ -4,10 +4,10 @@ using System;
 namespace DevOps.Dialogs
 {
     [Serializable]
-    public class SearchIssueQuery
+    public class GetIssueQuery
     {
         [Prompt("Please enter issue {&}")]
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         [Prompt("Search in which {&}?")]
         public string Repository { get; set; }

@@ -9,5 +9,7 @@ namespace DevOps.Interfaces
         Task<IEnumerable<CodeRepository>> GetCodeRepositories(string token);
 
         Task<Issue> CreateIssue(Issue issue, string token);
+
+        Task<Issue> GetIssue(string issueId, string repository, string token);
     }
 }

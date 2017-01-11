@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GithubIssueDto.cs" />
     <Compile Include="GithubRepository.cs" />
     <Compile Include="GithubRepositoryDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

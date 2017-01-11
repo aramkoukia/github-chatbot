@@ -111,7 +111,7 @@
   <ItemGroup>
     <Compile Include="CodeRepositoryDialogs.cs" />
     <Compile Include="DialogQueries\CodeRepositoriesQuery.cs" />
-    <Compile Include="DialogQueries\SearchIssueQuery.cs" />
+    <Compile Include="DialogQueries\GetIssueQuery.cs" />
     <Compile Include="DialogQueries\CreateIssueQuery.cs" />
     <Compile Include="IssuesDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

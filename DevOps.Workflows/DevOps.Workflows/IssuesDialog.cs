@@ -39,9 +39,9 @@ namespace DevOps.Dialogs
             context.Call(issuesFormDialog, ResumeAfterIssuesFormDialog);
         }
 
-        private IForm<IssuesQuery> BuildIssuesForm()
+        private IForm<CreateIssueQuery> BuildIssuesForm()
         {
-            OnCompletionAsyncDelegate<IssuesQuery> processIssuesCreation = async (context, state) =>
+            OnCompletionAsyncDelegate<CreateIssueQuery> processIssuesCreation = async (context, state) =>
             {
                 // TODO: cast IActivity to Activity
                 var token = "961ac7b8c3c654fde4d437d3502a3b8aece8eb22"; //_tokenHelper.GetGithubToken(context.Activity);
@@ -53,7 +53,7 @@ namespace DevOps.Dialogs
                 //await context.PostAsync($"Ok. Creating an issue with title: {state.Title}.");
             };
 
-            return new FormBuilder<IssuesQuery>()
+            return new FormBuilder<CreateIssueQuery>()
                 //.Field(nameof(IssuesQuery.Title))
                 //.Message("Creating an issue with title: {Title}...")
                 .AddRemainingFields()
@@ -61,7 +61,7 @@ namespace DevOps.Dialogs
                 .Build();
         }
 
-        private async Task ResumeAfterIssuesFormDialog(IDialogContext context, IAwaitable<IssuesQuery> result)
+        private async Task ResumeAfterIssuesFormDialog(IDialogContext context, IAwaitable<CreateIssueQuery> result)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace DevOps.Dialogs
             }
         }
 
-        private async Task<IEnumerable<Issue>> GetIssuesAsync(IssuesQuery searchQuery)
+        private async Task<IEnumerable<Issue>> GetIssuesAsync(CreateIssueQuery searchQuery)
         {
             var issues = new List<Issue>();
             for (int i = 1; i <= 5; i++)

@@ -17,6 +17,7 @@ namespace DevOps.Dialogs
     [LuisModel("9e723e79-c484-477f-9c5f-f5bcbd92d653", "2ecb16643a0d49b28e5188613f192c36")]
     public class RootLuisDialog : LuisDialog<object>
     {
+        private const string IssueId = "IssueId";
         private const string IssueAssignee = "IssueAssignee";
         private const string IssueTitle = "IssueTitle";
         private const string IssueRepository = "IssueRepository";
@@ -56,20 +57,19 @@ namespace DevOps.Dialogs
         }
 
         [LuisIntent("Search Issue")]
-        public async Task SearchIssue(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
+        public async Task GetIssue(IDialogContext context, IAwaitable<IMessageActivity> activity, LuisResult result)
         {
             var message = await activity;
             //await context.PostAsync($"Welcome to the Issue manager! analyzing your message: '{message.Text}'...");
 
-            var searchIssueQuery = new SearchIssueQuery();
+            var getIssueQuery = new GetIssueQuery();
 
-            EntityRecommendation issueTitleEntityRecommendation;
+            EntityRecommendation issueIdEntityRecommendation;
             EntityRecommendation issueRepositoryEntityRecommendation;
-            EntityRecommendation issueBodyEntityRecommendation;
 
-            if (result.TryFindEntity(IssueTitle, out issueTitleEntityRecommendation))
+            if (result.TryFindEntity(IssueId, out issueIdEntityRecommendation))
             {
-                issueTitleEntityRecommendation.Type = "Title";
+                issueIdEntityRecommendation.Type = "Id";
             }
 
             if (result.TryFindEntity(IssueRepository, out issueRepositoryEntityRecommendation))
@@ -77,9 +77,9 @@ namespace DevOps.Dialogs
                 issueRepositoryEntityRecommendation.Type = "Repository";
             }
 
-            var createIssueFormDialog = new FormDialog<SearchIssueQuery>(searchIssueQuery, BuildCreateIssueForm, FormOptions.PromptInStart, result.Entities);
+            var createIssueFormDialog = new FormDialog<GetIssueQuery>(getIssueQuery, BuildGetIssueForm, FormOptions.PromptInStart, result.Entities);
 
-            context.Call(createIssueFormDialog, ResumeAfterCreateIssueFormDialog);
+            context.Call(createIssueFormDialog, ResumeAfterGetIssueFormDialog);
         }
 
         [LuisIntent("Help")]
@@ -135,37 +135,30 @@ namespace DevOps.Dialogs
                 .Build();
         }
 
-        private IForm<SearchIssueQuery> BuildSearchIssueForm()
+        private IForm<GetIssueQuery> BuildGetIssueForm()
         {
-            OnCompletionAsyncDelegate<SearchIssueQuery> processSearchIssue = async (context, state) =>
+            OnCompletionAsyncDelegate<GetIssueQuery> processGetIssue = async (context, state) =>
             {
-                var message = "Searching Issue ";
-                if (!string.IsNullOrEmpty(state.ID))
-                {
-                    message += $" with {state.ID}...";
-                }
-                //else if (!string.IsNullOrEmpty(state.Repository))
-                //{
-                //    message += $" in {state.Repository} Repository...";
-                //}
-
                 // TODO: cast IActivity to Activity
                 var token = "961ac7b8c3c654fde4d437d3502a3b8aece8eb22"; //_tokenHelper.GetGithubToken(context.Activity);
                 // TODO: use unity and the interface instead
                 var repo = new GithubRepository();
-                var result = await repo.CreateIssue(new Issue() { Title = state.Title, Body = state.Body, Repository = state.Repository }, token);
-                //await context.PostAsync($"Ok. Issue created with title: {state.Title}.");
-
-                await context.PostAsync(message);
-
-
+                var result = await repo.GetIssue(state.Id,  state.Repository, token);
+                if(result != null)
+                {
+                    await context.PostAsync($"Issue Id: {result.Number}.");
+                    await context.PostAsync($"Title: {result.Title}.");
+                    await context.PostAsync($"Body: {result.Body}.");
+                    await context.PostAsync($"State: {result.State}");
+                }
+                else
+                    await context.PostAsync($"Sorry, wasn't able to find Issue with Id: {state.Id} in Repo: {state.Repository}");
             };
 
-            return new FormBuilder<CreateIssueQuery>()
-                .Field(nameof(CreateIssueQuery.Title), (state) => string.IsNullOrEmpty(state.Title))
-                .Field(nameof(CreateIssueQuery.Repository), (state) => string.IsNullOrEmpty(state.Repository))
-                .Field(nameof(CreateIssueQuery.Body), (state) => string.IsNullOrEmpty(state.Body))
-                .OnCompletion(processSearchIssue)
+            return new FormBuilder<GetIssueQuery>()
+                .Field(nameof(GetIssueQuery.Id), (state) => string.IsNullOrEmpty(state.Id))
+                .Field(nameof(GetIssueQuery.Repository), (state) => string.IsNullOrEmpty(state.Repository))
+                .OnCompletion(processGetIssue)
                 .Build();
         }
 
@@ -178,6 +171,36 @@ namespace DevOps.Dialogs
                 await context.PostAsync($"Issue created.");
                 var resultMessage = context.MakeMessage();
                 await context.PostAsync(resultMessage);
+            }
+            catch (FormCanceledException ex)
+            {
+                string reply;
+
+                if (ex.InnerException == null)
+                {
+                    reply = "You have canceled the operation.";
+                }
+                else
+                {
+                    reply = $"Oops! Something went wrong :( Technical Details: {ex.InnerException.Message}";
+                }
+
+                await context.PostAsync(reply);
+            }
+            finally
+            {
+                context.Done<object>(null);
+            }
+        }
+
+        private async Task ResumeAfterGetIssueFormDialog(IDialogContext context, IAwaitable<GetIssueQuery> result)
+        {
+            try
+            {
+                //var searchQuery = await result;
+                //await context.PostAsync($"Issue found. Title: {context.Reset}");
+                //var resultMessage = context.MakeMessage();
+                //await context.PostAsync(resultMessage);
             }
             catch (FormCanceledException ex)
             {
