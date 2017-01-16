@@ -33,5 +33,13 @@ namespace DevOps.IntegrationTests
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public async Task GithubRepository_CreatePullRequest_HappyPath()
+        {
+            var token = "961ac7b8c3c654fde4d437d3502a3b8aece8eb22";
+            var result = await _githubRepository.CreatePullRequest(new PullRequest() {  Base = "master", Title = "test PR 1 from Bot", Body = "PR Body", Head = "featurebranch1", MaintainerCanModify = true,  Repository = "DevOrb" }, token);
+            Assert.IsNotNull(result);
+        }
+
     }
 }
