@@ -16,6 +16,8 @@ namespace DevOps.Github
         private static string GithubBaseUrl = "https://api.github.com";
         private static string CodeRepositoriesUrl = "/user/repos";
 
+        #region Repositories
+
         public async Task<IEnumerable<CodeRepository>> GetCodeRepositories(string token)
         {
             HttpClient httpClient = new HttpClient();
@@ -26,8 +28,12 @@ namespace DevOps.Github
             HttpResponseMessage response = await httpClient.GetAsync(GithubBaseUrl + CodeRepositoriesUrl);
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<List<GithubRepositoryDto>>(responseString);
-            return Map(result);
+            return DataMapper.Map(result);
         }
+
+        #endregion
+
+        #region Issues
 
         public async Task<Issue> CreateIssue(Issue issue, string token)
         {
@@ -54,43 +60,38 @@ namespace DevOps.Github
             httpClient.DefaultRequestHeaders.Add("User-Agent", "Anything");
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
-            
+
             // TODO: the repo and owner should not be hardcoded, user should select them
             var githubIssueUrl = $"/repos/daveos/{repository}/issues/{issueId}";
             HttpResponseMessage response = await httpClient.GetAsync(GithubBaseUrl + githubIssueUrl);
             var responseString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<GithubIssueDto>(responseString);
-            return Map(result);
+            return DataMapper.Map(result);
         }
 
-        private IEnumerable<CodeRepository> Map(List<GithubRepositoryDto> result)
+        #endregion
+
+        #region Pull Requests
+
+        public async Task<PullRequest> CreatePullRequest(PullRequest pullRequest, string token)
         {
-            if (result == null)
-                return null;
+            HttpClient httpClient = new HttpClient();
 
-            return result.Select(a => new CodeRepository
-            {
-                FullName = a.full_name,
-                Id = a.id.ToString(),
-                Name = a.name,
-                Owner = a.owner.login,
-                Url = a.url
-            }).ToList();
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "Anything");
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", token);
+
+            var param = JsonConvert.SerializeObject(new { title = pullRequest.Title, body = pullRequest.Body , head = pullRequest.Head, @base = pullRequest.Base, maintainer_can_modify = pullRequest.MaintainerCanModify });
+            HttpContent contentPost = new StringContent(param, Encoding.UTF8, "application/json");
+
+            // TODO: the repo and owner should not be hardcoded, user should select them
+            var issuesUrl = $"/repos/daveos/{pullRequest.Repository}/pulls";
+
+            HttpResponseMessage response = await httpClient.PostAsync(GithubBaseUrl + issuesUrl, contentPost);
+            return pullRequest;
         }
 
-        private Issue Map(GithubIssueDto result)
-        {
-            if (result == null)
-                return null;
+        #endregion
 
-            return new Issue
-            {
-                Body = result.body,
-                Number = result.id.ToString(),
-                Repository = result.repository_url,
-                State = result.state,
-                Title = result.title
-            };
-        }
     }
 }

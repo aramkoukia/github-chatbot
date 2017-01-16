@@ -111,8 +111,10 @@
   <ItemGroup>
     <Compile Include="CodeRepositoryDialogs.cs" />
     <Compile Include="DialogQueries\CodeRepositoriesQuery.cs" />
+    <Compile Include="DialogQueries\CreatePullRequestQuery.cs" />
     <Compile Include="DialogQueries\GetIssueQuery.cs" />
     <Compile Include="DialogQueries\CreateIssueQuery.cs" />
+    <Compile Include="PullRequestsDialog.cs" />
     <Compile Include="IssuesDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RootDialog.cs" />
