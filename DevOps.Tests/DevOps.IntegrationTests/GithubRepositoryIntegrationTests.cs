@@ -20,7 +20,7 @@ namespace DevOps.IntegrationTests
         [TestMethod]
         public async Task GithubRepository_GetCodeRepositories_HappyPath()
         {
-            var token = "961ac7b8c3c654fde4d437d3502a3b8aece8eb22";
+            var token = "oathtoken";
             var result = await _githubRepository.GetCodeRepositories(token);
             Assert.IsNotNull(result);
         }
@@ -28,7 +28,7 @@ namespace DevOps.IntegrationTests
         [TestMethod]
         public async Task GithubRepository_CreateIssue_HappyPath()
         {
-            var token = "961ac7b8c3c654fde4d437d3502a3b8aece8eb22";
+            var token = "oathtoken";
             var result = await _githubRepository.CreateIssue(new Issue() { Body = "test body" , Title = "Test title"}, token);
             Assert.IsNotNull(result);
         }
@@ -36,7 +36,7 @@ namespace DevOps.IntegrationTests
         [TestMethod]
         public async Task GithubRepository_CreatePullRequest_HappyPath()
         {
-            var token = "961ac7b8c3c654fde4d437d3502a3b8aece8eb22";
+            var token = "oathtoken";
             var result = await _githubRepository.CreatePullRequest(new PullRequest() {  Base = "master", Title = "test PR 1 from Bot", Body = "PR Body", Head = "featurebranch1", MaintainerCanModify = true,  Repository = "DevOrb" }, token);
             Assert.IsNotNull(result);
         }
